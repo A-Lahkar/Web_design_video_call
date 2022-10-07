@@ -109,10 +109,7 @@ $(function () {
 
     $("#invite_button").click(function () {
         var copyText = window.location.href
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(copyText.valueOf);
-
     })
 
     peer.on("open", (id) => {
