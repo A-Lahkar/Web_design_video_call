@@ -109,7 +109,8 @@ $(function () {
 
     $("#invite_button").click(function () {
         var copyText = window.location.href
-        navigator.clipboard.writeText(copyText.valueOf);
+        navigator.clipboard.writeText(copyText);
+        alert("Copyied Video Chat Link!!!")
     })
 
     peer.on("open", (id) => {
