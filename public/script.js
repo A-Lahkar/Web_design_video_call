@@ -108,44 +108,25 @@ $(function () {
     })
 
     $("#invite_button").click(function () {
-
-        const to = prompt("Enter the email address")
-
-        let data = {
-            url: window.location.href,
-            to: to
-        }
-
-        console.log(data)
-
-        $.ajax({
-            url: "/send-mail",
-            type: "post",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
-                alert("Invite sent!")
-            },
-            error: function(result){
-                console.log(result.responseJSON)
-            }
-        })
+        var copyText = window.location.href
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.valueOf);
 
     })
 
-})
+    peer.on("open", (id) => {
+        socket.emit("join-room", ROOM_ID, id, user);
+    });
 
-peer.on("open", (id) => {
-    socket.emit("join-room", ROOM_ID, id, user);
-});
-
-socket.on("createMessage", (message, userName) => {
-    $(".messages").append(`
+    socket.on("createMessage", (message, userName) => {
+        $(".messages").append(`
         <div class="message">
             <b><i class="far fa-user-circle"></i> <span> ${userName === user ? "me" : userName
-        }</span> </b>
+            }</span> </b>
             <span>${message}</span>
         </div>
     `)
-});
+    });
+
+})
